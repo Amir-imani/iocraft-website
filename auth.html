@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOcraft — Access Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+    <canvas id="backgroundCanvas"></canvas>
+
+    <div class="auth-wrapper">
+        <div class="glass-panel" id="mainPanel">
+            
+            <div class="card-bg card-bg-1"></div>
+            <div class="card-bg card-bg-2"></div>
+
+            <div class="panel-content welcome-side">
+                <div class="welcome-content">
+                    <div class="logo-area">
+                        <i class="fas fa-microchip"></i> IO<span>craft</span>
+                    </div>
+                    <h1>SYSTEM<br>ACCESS</h1>
+                    <div class="decor-line"></div>
+                    <p class="description">
+                        Engineered for performance.<br>
+                        Secure access point for embedded systems developers.
+                    </p>
+                </div>
+                <div class="glow-circle"></div>
+            </div>
+
+            <div class="panel-content form-side">
+                
+                <div class="form-box login-box">
+                    <h2>Welcome Back</h2>
+                    <p class="sub-h">Credentials required for entry.</p>
+                    
+                    <form action="#" onsubmit="event.preventDefault()">
+                        <div class="input-field">
+                            <input type="text" required>
+                            <label>Username</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" required>
+                            <label>Password</label>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        
+                        <div class="actions">
+                            <a href="#" class="forgot">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span>INITIATE SESSION</span>
+                        </button>
+                    </form>
+
+                    <div class="bottom-switch">
+                        New user? <span id="toSignup">Create Account</span>
+                    </div>
+                </div>
+
+                <div class="form-box signup-box">
+                    <h2>New Protocol</h2>
+                    <p class="sub-h">Register new system identity.</p>
+                    
+                    <form action="#" onsubmit="event.preventDefault()">
+                        <div class="input-field">
+                            <input type="text" required>
+                            <label>Full Name</label>
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="input-field">
+                            <input type="email" required>
+                            <label>Email Address</label>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" required>
+                            <label>Set Password</label>
+                            <i class="fas fa-key"></i>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span>REGISTER ID</span>
+                        </button>
+                    </form>
+
+                    <div class="bottom-switch">
+                        Existing user? <span id="toLogin">Back to Login</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Return to Base
+        </a>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>

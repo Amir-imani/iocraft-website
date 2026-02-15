@@ -1,0 +1,123 @@
+/* ===================================================
+   Variables & Reset
+   =================================================== */
+:root {
+  --pre-bg:         #0a192f;
+  --skin-accent:    #f3c1a3;    /* tweak to match exact skin tone */
+  --text-glow:      #64ffda;
+  --icon-color:     #ccd6f6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===================================================
+   Preloader Container
+   =================================================== */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--pre-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+#preloader.preloader-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===================================================
+   Content Alignment
+   =================================================== */
+.preloader-content {
+  text-align: center;
+  color: #fff;
+}
+
+/* ===================================================
+   1. Avatar + Name
+   =================================================== */
+.preloader-avatar-wrapper {
+  margin-bottom: 1.5rem;
+}
+.preloader-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--skin-accent);
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeIn 0.8s forwards;
+  animation-delay: 0.2s;
+}
+.preloader-avatar-name {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--skin-accent);
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeIn 0.8s forwards;
+  animation-delay: 0.4s;
+}
+
+/* ===================================================
+   2. Main Title
+   =================================================== */
+.preloader-title {
+  font-size: 3rem;
+  color: var(--text-glow);
+  text-shadow: 0 0 10px var(--text-glow);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.8s;
+}
+
+/* ===================================================
+   3. Icon Row
+   =================================================== */
+.preloader-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;          /* very tight spacing */
+  margin: 1.2rem 0;
+  font-size: 2rem;
+  color: var(--icon-color);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s forwards;
+  animation-delay: 1.6s;
+}
+
+/* ===================================================
+   4. Design Credit
+   =================================================== */
+.preloader-credit {
+  font-size: 0.9rem;
+  color: var(--skin-accent);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s forwards;
+  animation-delay: 2.4s;
+}
+
+/* ===================================================
+   Keyframes: fadeIn
+   =================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--yt, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

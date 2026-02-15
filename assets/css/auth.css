@@ -1,0 +1,146 @@
+:root {
+    --bg-color: #02040a;
+    --panel-bg: rgba(15, 15, 20, 0.70); /* Slightly darker glass */
+    --accent: #ff003c; /* Red Neon */
+    --accent-blue: #00d1ff; /* For the second state */
+    --text-main: #fff;
+    --text-muted: #8892b0;
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    display: flex; justify-content: center; align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- CANVAS BACKGROUND --- */
+#backgroundCanvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+}
+
+/* --- WRAPPER --- */
+.auth-wrapper { position: relative; z-index: 10; padding: 20px; }
+
+/* --- GLASS PANEL --- */
+.glass-panel {
+    width: 900px; height: 550px;
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.7);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- ROTATING BACKGROUNDS (INTENSIFIED) --- */
+.card-bg {
+    position: absolute;
+    width: 1200px; height: 1200px; /* Larger to cover split screen */
+    top: -50%; left: -20%;
+    /* Stronger gradient and opacity */
+    background: linear-gradient(0deg, transparent, var(--accent), var(--accent));
+    transform-origin: bottom right;
+    transition: 1.5s ease-in-out;
+    z-index: 1; /* Behind content */
+    opacity: 0.25; /* Much brighter than before */
+    filter: blur(30px);
+}
+
+.card-bg-2 {
+    /* Stronger blue for the second state */
+    background: linear-gradient(0deg, transparent, var(--accent-blue), var(--accent-blue));
+    transform-origin: bottom left;
+    opacity: 0;
+}
+
+/* Active State (Switching) */
+.glass-panel.active .card-bg-1 { transform: rotate(-90deg); opacity: 0; }
+.glass-panel.active .card-bg-2 { transform: rotate(0deg); opacity: 0.25; top: -20%; left: -50%; }
+
+/* --- PANEL CONTENT LAYERS --- */
+.panel-content { position: relative; z-index: 2; /* Above the rotating bg */ }
+
+/* --- LEFT SIDE --- */
+.welcome-side {
+    width: 45%; padding: 50px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--glass-border);
+}
+.logo-area { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 30px; }
+.logo-area span { color: var(--accent); }
+.welcome-side h1 { font-size: 3rem; line-height: 1; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
+.decor-line { width: 50px; height: 3px; background: var(--accent); margin-bottom: 20px; box-shadow: 0 0 10px var(--accent);}
+.description { color: var(--text-muted); line-height: 1.6; font-size: 0.9rem; }
+.glow-circle {
+    position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px;
+    background: var(--accent); filter: blur(100px); opacity: 0.2; z-index: -1;
+}
+
+/* --- RIGHT SIDE (SLIDING FORMS) --- */
+.form-side {
+    width: 55%; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.form-box {
+    width: 100%; padding: 50px;
+    position: absolute;
+    transition: 0.6s ease-in-out;
+    display: flex; flex-direction: column; justify-content: center;
+}
+
+/* Sliding Logic */
+.login-box { transform: translateX(0); opacity: 1; }
+.signup-box { transform: translateX(100%); opacity: 0; pointer-events: none; }
+
+.glass-panel.active .login-box { transform: translateX(-100%); opacity: 0; pointer-events: none; }
+.glass-panel.active .signup-box { transform: translateX(0); opacity: 1; pointer-events: all; }
+
+
+/* --- FORM STYLES (Same as before) --- */
+.form-box h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 5px; }
+.sub-h { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
+.input-field { position: relative; margin-bottom: 20px; }
+.input-field input {
+    width: 100%; padding: 12px 15px 12px 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; color: #fff; outline: none; transition: 0.3s;
+}
+.input-field label {
+    position: absolute; left: 40px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 0.85rem; pointer-events: none; transition: 0.3s;
+}
+.input-field i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 0.9rem; }
+.input-field input:focus, .input-field input:valid { border-color: var(--accent); }
+.input-field input:focus ~ label, .input-field input:valid ~ label {
+    top: -8px; left: 10px; font-size: 0.7rem; color: var(--accent); background: var(--bg-color); padding: 0 4px;
+}
+.btn-submit {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: var(--accent); color: #fff; font-weight: 700; cursor: pointer;
+    margin-top: 15px; transition: 0.3s; box-shadow: 0 0 10px rgba(255,0,60,0.2);
+}
+.btn-submit:hover { background: #ff1f52; box-shadow: 0 0 20px rgba(255,0,60,0.4); }
+.bottom-switch { margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); text-align: center;}
+.bottom-switch span { color: var(--text-main); cursor: pointer; font-weight: 600; transition: 0.3s; }
+.bottom-switch span:hover { color: var(--accent); }
+.back-link { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.9rem; opacity: 0.7; transition: 0.3s; text-decoration: none;}
+.back-link:hover { opacity: 1; color: var(--accent); }
+
+/* Responsive */
+@media (max-width: 850px) {
+    .glass-panel { flex-direction: column; height: auto; max-width: 400px; }
+    .welcome-side { width: 100%; padding: 30px; border-right: none; border-bottom: 1px solid var(--glass-border); text-align: center;}
+    .decor-line { margin: 20px auto; }
+    .form-side { width: 100%; min-height: 450px; }
+    .card-bg { width: 800px; height: 800px; left: -50%; top: -20%;}
+}

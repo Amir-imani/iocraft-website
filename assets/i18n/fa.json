@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "خانه",
+    "projects": "پروژه‌ها",
+    "about": "درباره",
+    "contact": "تماس",
+    "login": "ورود"
+  },
+  "auth": {
+    "tab": {
+      "login": "ورود",
+      "signup": "ثبت‌نام"
+    },
+    "login": {
+      "title": "خوش‌آمدید",
+      "subtitle": "وارد IOcraft شوید (نمونه)",
+      "usernamePlaceholder": "نام کاربری یا ایمیل",
+      "passwordPlaceholder": "رمز عبور",
+      "submit": "ورود",
+      "forgot": "رمز عبور را فراموش کرده‌اید؟"
+    },
+    "signup": {
+      "title": "ایجاد حساب",
+      "subtitle": "شروع به کار با IOcraft",
+      "namePlaceholder": "نام کامل",
+      "emailPlaceholder": "نشانی ایمیل",
+      "usernamePlaceholder": "نام کاربری",
+      "passwordPlaceholder": "رمز عبور",
+      "confirmPlaceholder": "تأیید رمز عبور",
+      "submit": "ثبت‌نام",
+      "already": "حساب دارید؟ وارد شوید"
+    },
+    "messages": {
+      "signup_success": "حساب ساخته شد (نمونه). لطفاً وارد شوید.",
+      "login_success": "ورود موفق (نمونه).",
+      "password_mismatch": "رمزها مطابقت ندارند"
+    }
+  },
+  "contact": {
+    "emailLabel": "ایمیل",
+    "locationLabel": "موقعیت"
+  }
+}

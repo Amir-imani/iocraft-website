@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login"
+  },
+  "auth": {
+    "tab": {
+      "login": "Sign In",
+      "signup": "Sign Up"
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to IOcraft (demo)",
+      "usernamePlaceholder": "Username or Email",
+      "passwordPlaceholder": "Password",
+      "submit": "Sign in",
+      "forgot": "Forgot password?"
+    },
+    "signup": {
+      "title": "Create account",
+      "subtitle": "Start building with IOcraft",
+      "namePlaceholder": "Full name",
+      "emailPlaceholder": "Email address",
+      "usernamePlaceholder": "Choose a username",
+      "passwordPlaceholder": "Password",
+      "confirmPlaceholder": "Confirm password",
+      "submit": "Create account",
+      "already": "Already have an account? Sign in"
+    },
+    "messages": {
+      "signup_success": "Account created (demo). Please sign in.",
+      "login_success": "Signed in (demo).",
+      "password_mismatch": "Passwords do not match"
+    }
+  },
+  "contact": {
+    "emailLabel": "Email",
+    "locationLabel": "Location"
+  }
+}
