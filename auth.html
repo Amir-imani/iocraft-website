@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-
     <canvas id="backgroundCanvas"></canvas>
 
     <div class="auth-wrapper">
@@ -39,24 +38,24 @@
                     <h2>Welcome Back</h2>
                     <p class="sub-h">Credentials required for entry.</p>
                     
-                    <form action="#" onsubmit="event.preventDefault()">
+                    <form id="loginForm">
                         <div class="input-field">
-                            <input type="text" required>
-                            <label>Username</label>
+                            <input type="text" id="loginEmail" required>
+                            <label>Email</label>
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="input-field">
-                            <input type="password" required>
+                            <input type="password" id="loginPassword" required>
                             <label>Password</label>
                             <i class="fas fa-lock"></i>
                         </div>
                         
-                        <div class="actions">
-                            <a href="#" class="forgot">Forgot Password?</a>
-                        </div>
-
                         <button type="submit" class="btn-submit">
                             <span>INITIATE SESSION</span>
+                        </button>
+
+                        <button type="button" class="btn-google" id="googleLoginBtn">
+                            <i class="fab fa-google"></i> Sign in with Google
                         </button>
                     </form>
 
@@ -69,19 +68,19 @@
                     <h2>New Protocol</h2>
                     <p class="sub-h">Register new system identity.</p>
                     
-                    <form action="#" onsubmit="event.preventDefault()">
+                    <form id="signupForm">
                         <div class="input-field">
-                            <input type="text" required>
+                            <input type="text" id="signupName" required>
                             <label>Full Name</label>
                             <i class="fas fa-id-card"></i>
                         </div>
                         <div class="input-field">
-                            <input type="email" required>
+                            <input type="email" id="signupEmail" required>
                             <label>Email Address</label>
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="input-field">
-                            <input type="password" required>
+                            <input type="password" id="signupPassword" required>
                             <label>Set Password</label>
                             <i class="fas fa-key"></i>
                         </div>
@@ -104,6 +103,6 @@
         </a>
     </div>
 
-    <script src="assets/js/auth.js"></script>
+    <script type="module" src="assets/js/auth.js"></script>
 </body>
 </html>

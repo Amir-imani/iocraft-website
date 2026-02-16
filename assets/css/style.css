@@ -817,3 +817,22 @@ ul { list-style: none; }
     .contact-wrapper { flex-direction: column; }
     .contact-form-box { padding: 25px; }
 }
+
+/* Login Button Style */
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
