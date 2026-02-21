@@ -1,28 +1,29 @@
 // assets/js/dashboard.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// --- تنظیمات فایربیس (همونی که تو auth.js داری) ---
-const firebaseConfig = {
-  apiKey: "AIzaSyDoNTs8yrAZgQDeKkjV5H86s2YvkdML28s",
-  authDomain: "iocraft-auth.firebaseapp.com",
-  projectId: "iocraft-auth",
-  storageBucket: "iocraft-auth.firebasestorage.app",
-  messagingSenderId: "272356682706",
-  appId: "1:272356682706:web:148265d9625c78cbb8f60b",
-  measurementId: "G-WDFW5QBLVD"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// --- 1. SUPABASE CONFIGURATION ---
+// همون URL و Key که تو auth.js گذاشتی رو اینجا هم بذار
+const supabaseUrl = 'https://gaoqutcpmklflhsbjhev.supabase.co'; 
+const supabaseKey = 'sb_publishable_zUtKpIdr4VPunC2GeQOxBQ_3czW9Q2D';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 1. بررسی وضعیت لاگین (Security Check)
-onAuthStateChanged(auth, (user) => {
-    if (user) {
+async function checkSession() {
+    // گرفتن اطلاعات نشست (Session) فعلی از سوپابیس
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (session) {
         // کاربر لاگین است -> اطلاعاتش رو نشون بده
-        updateDashboardUI(user);
+        updateDashboardUI(session.user);
     } else {
         // کاربر لاگین نیست -> برگردونش به صفحه لاگین
+        window.location.href = "auth.html";
+    }
+}
+
+// گوش دادن به تغییرات وضعیت (مثل زمانی که کاربر دکمه خروج رو میزنه)
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
         window.location.href = "auth.html";
     }
 });
@@ -33,23 +34,25 @@ function updateDashboardUI(user) {
     const avatarEl = document.getElementById('sidebarAvatar');
     const welcomeEl = document.getElementById('welcomeMsg');
 
-    // اگر اسم نداشت (ایمیل بود)، قسمتی از ایمیل رو نشون بده
-    const displayName = user.displayName || user.email.split('@')[0];
+    // تو سوپابیس، اسمی که موقع ثبت‌نام گرفتیم تو user_metadata ذخیره می‌شه
+    const displayName = user.user_metadata?.full_name || user.email.split('@')[0];
     
-    nameEl.textContent = displayName;
-    welcomeEl.textContent = `Welcome Back, ${displayName}.`;
-    avatarEl.textContent = displayName.charAt(0).toUpperCase(); // حرف اول اسم
+    if(nameEl) nameEl.textContent = displayName;
+    if(welcomeEl) welcomeEl.textContent = `Welcome Back, ${displayName}.`;
+    if(avatarEl) avatarEl.textContent = displayName.charAt(0).toUpperCase();
 }
 
 // 3. دکمه خروج
 const logoutBtn = document.getElementById('logoutBtn');
 if(logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        signOut(auth).then(() => {
-            // وقتی خارج شد، صفحه بسته میشه یا میره به ایندکس
-            window.location.href = "index.html";
-        }).catch((error) => {
+    logoutBtn.addEventListener('click', async () => {
+        const { error } = await supabase.auth.signOut();
+        if(error) {
             console.error("Logout error", error);
-        });
+        }
+        // نیازی به ریدایرکت دستی نیست، onAuthStateChange خودش هندل می‌کنه
     });
 }
+
+// اجرای چک کردن سشن به محض لود شدن فایل
+checkSession();
