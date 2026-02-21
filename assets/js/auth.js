@@ -1,99 +1,86 @@
-// --- 1. FIREBASE IMPORTS ---
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signInWithPopup, 
-    GoogleAuthProvider 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// --- 1. SUPABASE IMPORTS ---
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// --- 2. FIREBASE CONFIGURATION ---
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDoNTs8yrAZgQDeKkjV5H86s2YvkdML28s",
-  authDomain: "iocraft-auth.firebaseapp.com",
-  projectId: "iocraft-auth",
-  storageBucket: "iocraft-auth.firebasestorage.app",
-  messagingSenderId: "272356682706",
-  appId: "1:272356682706:web:148265d9625c78cbb8f60b",
-  measurementId: "G-WDFW5QBLVD"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+// --- 2. SUPABASE CONFIGURATION ---
+// آدرس URL و کلید Anon خودت رو از پنل سوپابیس اینجا جایگذاری کن
+const supabaseUrl = 'https://gaoqutcpmklflhsbjhev.supabase.co'; 
+const supabaseKey = 'sb_publishable_zUtKpIdr4VPunC2GeQOxBQ_3czW9Q2D';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // --- 3. AUTHENTICATION LOGIC ---
 
 // A. SIGN UP (ثبت نام با ایمیل)
 const signupForm = document.getElementById('signupForm');
 if(signupForm) {
-    signupForm.addEventListener('submit', (e) => {
+    signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('signupEmail').value;
         const password = document.getElementById('signupPassword').value;
         const name = document.getElementById('signupName').value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // ثبت نام موفق
-                const user = userCredential.user;
-                alert(`Welcome Engineer ${name}! Registration Successful.`);
-                console.log("Registered:", user);
-                // اینجا بعداً رایرکت می‌کنیم به داشبورد
-                 window.open("dashboard.html", "_blank"); 
-            })
-            .catch((error) => {
-                alert("Error: " + error.message);
-            });
+        // ارسال درخواست ثبت نام به سوپابیس
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: name, // ذخیره اسم مهندس در دیتابیس
+                }
+            }
+        });
+
+        if (error) {
+            alert("Error: " + error.message);
+        } else {
+            alert(`Welcome Engineer ${name}! Registration Successful.`);
+            console.log("Registered:", data.user);
+            window.location.href = "dashboard.html"; 
+        }
     });
 }
 
 // B. LOGIN (ورود با ایمیل)
 const loginForm = document.getElementById('loginForm');
 if(loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // ورود موفق
-                const user = userCredential.user;
-                alert("Access Granted. System Initialized.");
-                console.log("Logged in:", user);
-                // رایرکت به صفحه اصلی یا داشبورد
-                window.open("dashboard.html", "_blank");
-            })
-            .catch((error) => {
-                alert("Access Denied: " + error.message);
-            });
+        // ارسال درخواست ورود به سوپابیس
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            alert("Access Denied: " + error.message);
+        } else {
+            alert("Access Granted. System Initialized.");
+            console.log("Logged in:", data.user);
+            window.location.href = "dashboard.html";
+        }
     });
 }
 
 // C. GOOGLE LOGIN (ورود با گوگل)
 const googleBtn = document.getElementById('googleLoginBtn');
 if(googleBtn) {
-    googleBtn.addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                // ورود موفق با گوگل
-                const user = result.user;
-                alert(`Welcome ${user.displayName}! Google Authentication Verified.`);
-                window.open("dashboard.html", "_blank");
-            })
-            .catch((error) => {
-                alert("Google Auth Failed: " + error.message);
-            });
+    googleBtn.addEventListener('click', async () => {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+        });
+        
+        if (error) {
+            alert("Google Auth Failed: " + error.message);
+        }
     });
 }
 
 
+
 // --- 4. UI ANIMATIONS (The Particles & Switcher) ---
-// (این بخش همون کدهای قبلی خودته که اینجا حفظشون کردیم)
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Switch Logic
